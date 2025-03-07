@@ -257,7 +257,7 @@ jobs:
           arduino-platform: esp32:esp32@2.0.11
           platform-url: https://github.com/espressif/arduino-esp32/releases/download/2.0.11/package_esp32_dev_index.json
           
-      - name: Rename Marauder Multi Board bin
+      - name: Rename Electronic Cats Multi Board bin
         run: |
           mv ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.electroniccats.bin    
       
@@ -735,7 +735,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: esp32_marauder.electroniccats.bin
-          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.electroniccats.bin
+          path: ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.electroniccats.bin
           retention-days: 5
           
       - name: Create Release
