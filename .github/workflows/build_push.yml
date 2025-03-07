@@ -233,7 +233,7 @@ jobs:
           sed -i 's/^  \/\/#define MARAUDER_FLIPPER/  #define MARAUDER_FLIPPER/' esp32_marauder/configs.h
           sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
           sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
-          sed -i 's/^  #define MARAUDER_ELECTRONICCATS3/ \/\/#define MARAUDER_ELECTRONICCATS3/' esp32_marauder/configs.h
+          sed -i 's/^  \/\/#define MARAUDER_ELECTRONICCATS3/ #define MARAUDER_ELECTRONICCATS3/' esp32_marauder/configs.h
                     
       - name: Build Marauder for Flipper Zero WiFi Dev Board
         uses: ArminJo/arduino-test-compile@v3.2.1
