@@ -233,6 +233,7 @@ jobs:
           sed -i 's/^  \/\/#define MARAUDER_FLIPPER/  #define MARAUDER_FLIPPER/' esp32_marauder/configs.h
           sed -i 's/^  #define ESP32_LDDB/  \/\/#define ESP32_LDDB/' esp32_marauder/configs.h
           sed -i 's/^  #define MARAUDER_DEV_BOARD_PRO/  \/\/#define MARAUDER_DEV_BOARD_PRO/' esp32_marauder/configs.h
+          sed -i 's/^  #define MARAUDER_ELECTRONICCATS3/ \/\/#define MARAUDER_ELECTRONICCATS3/' esp32_marauder/configs.h'
                     
       - name: Build Marauder for Flipper Zero WiFi Dev Board
         uses: ArminJo/arduino-test-compile@v3.2.1
@@ -246,7 +247,20 @@ jobs:
       - name: Rename Marauder Flipper bin
         run: |
           mv ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.flipper.bin
+      # Electronic Cats Marauder S3
+      - name: Build Marauder for Electronic Cats S3
+        uses: ArminJo/arduino-test-compile@v3.2.1
+        with:
+          sketch-names: esp32_marauder.ino
+          arduino-board-fqbn: esp32:esp32:esp32s3:PartitionScheme=min_spiffs,FlashSize=8M,PSRAM=enabled
+          extra-arduino-cli-args: "--warnings none"
+          arduino-platform: esp32:esp32@2.0.11
+          platform-url: https://github.com/espressif/arduino-esp32/releases/download/2.0.11/package_esp32_dev_index.json
           
+      - name: Rename Marauder Multi Board bin
+        run: |
+          mv ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.electroniccats.bin    
+      
       - name: Build Marauder for Flipper Zero Multi Board
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
@@ -716,6 +730,13 @@ jobs:
           name: esp32_marauder.marauder_v7.bin
           path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.marauder_v7.bin
           retention-days: 5
+      
+      - name: 'Upload Marauder Electronic Cats'
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32_marauder.electroniccats.bin
+          path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.electroniccats.bin
+          retention-days: 5
           
       - name: Create Release
         id: create_release
@@ -882,5 +903,17 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.marauder_v7.bin
           asset_name: esp32_marauder.marauder_v7.bin
+          asset_content_type: application/bin
+        if: github.event_name != 'pull_request'
+      
+      - name: Upload Marauder Electronic Cats Asset
+        id: upload-marauder-electroniccats-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./esp32_marauder/build/esp32.esp32.d32/esp32_marauder.electroniccats.bin
+          asset_name: esp32_marauder.electroniccats.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'

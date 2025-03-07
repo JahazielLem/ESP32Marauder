@@ -21,6 +21,7 @@
   //#define MARAUDER_DEV_BOARD_PRO
   //#define XIAO_ESP32_S3
   //#define MARAUDER_REV_FEATHER
+  //#define MARAUDER_ELECTRONICCATS3
   //// END BOARD TARGETS
 
   #define MARAUDER_VERSION "v1.2.1"
@@ -52,6 +53,8 @@
     #define HARDWARE_NAME "Flipper Zero Dev Board Pro"
   #elif defined(XIAO_ESP32_S3)
     #define HARDWARE_NAME "XIAO ESP32 S3"
+  #elif defined(MARAUDER_ELECTRONICCATS3)
+    #define HARDWARE_NAME "Marauder Electronic Cat S3"
   #else
     #define HARDWARE_NAME "ESP32"
   #endif
@@ -233,6 +236,19 @@
     //#define HAS_TEMP_SENSOR
     //#define HAS_GPS
   #endif
+
+  #ifdef MARAUDER_ELECTRONICCATS3
+  #define FLIPPER_ZERO_HAT
+  //#define HAS_BATTERY
+  #define HAS_BT
+  //#define HAS_BUTTONS
+  //#define HAS_NEOPIXEL_LED
+  //#define HAS_PWR_MGMT
+  //#define HAS_SCREEN
+  //#define HAS_SD
+  //#define HAS_TEMP_SENSOR
+  //#define HAS_GPS
+#endif
   //// END BOARD FEATURES
 
   //// POWER MANAGEMENT
